@@ -1,5 +1,10 @@
 using APIBurger_DanielaMora.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using APIBurger_DanielaMora.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<APIBurger_DanielaMoraContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("APIBurger_DanielaMoraContext") ?? throw new InvalidOperationException("Connection string 'APIBurger_DanielaMoraContext' not found.")));
 
 // Add services to the container.
 
@@ -24,5 +29,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapBurgerEndpoints();
+
+
 
 app.Run();
